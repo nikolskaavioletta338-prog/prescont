@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест: Present Simple vs Present Continuous</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #00b894;
+            --bg: #f0f3f8;
+            --card-bg: #ffffff;
+            --text: #2d3436;
+            --correct: #00b894;
+            --incorrect: #d63031;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: #636e72;
+            font-size: 1.1em;
+        }
+
+        .task {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary);
+        }
+
+        .task h2 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        .task p.instruction {
+            color: #636e72;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* Задание 1 - Радиокнопки */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: border 0.3s, background 0.3s;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+            font-size: 1.05em;
+        }
+
+        .radio-group label:hover {
+            background: #e9ecef;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+        }
+
+        /* Текстовые поля */
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1.05em;
+        }
+
+        .input-row label {
+            margin-right: 8px;
+            min-width: 200px;
+        }
+
+        input[type="text"] {
+            padding: 8px 12px;
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            width: 220px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        input.correct {
+            border-color: var(--correct);
+            background-color: #e8f8f5;
+        }
+
+        input.incorrect {
+            border-color: var(--incorrect);
+            background-color: #fdedec;
+        }
+
+        /* Задание 3 - Составление предложений */
+        .word-bank {
+            background: #f0f3f8;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+            letter-spacing: 1px;
+            color: #2d3436;
+        }
+
+        /* Кнопки */
+        .check-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            margin-top: 10px;
+        }
+
+        .check-btn:hover {
+            background: #5b4cc4;
+        }
+
+        .check-btn:active {
+            transform: scale(0.98);
+        }
+
+        .result-icon {
+            margin-left: 10px;
+            font-size: 1.2em;
+            min-width: 25px;
+        }
+
+        /* Итоговый результат */
+        #final-result {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            font-size: 1.4em;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        #final-result span {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .input-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-row label {
+                margin-bottom: 5px;
+                min-width: auto;
+            }
+            input[type="text"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🧠 Тест: Present Simple vs Present Continuous</h1>
+        <p>Проверь свои знания! Выполни все 4 задания и нажми «Проверить всё».</p>
+    </header>
+
+    <!-- ЗАДАНИЕ 1 -->
+    <div class="task" id="task1">
+        <h2>Задание 1. Выбери правильный вариант ✏️</h2>
+        <p class="instruction">Обведи правильный ответ:</p>
+
+        <div class="radio-group" data-answer="b">
+            <label><input type="radio" name="q1" value="a"> a) flies</label>
+            <label><input type="radio" name="q1" value="b"> b) is flying</label>
+        </div>
+        <div class="radio-group" data-answer="a">
+            <label><input type="radio" name="q2" value="a"> a) brush</label>
+            <label><input type="radio" name="q2" value="b"> b) am brushing</label>
+        </div>
+        <div class="radio-group" data-answer="b">
+            <label><input type="radio" name="q3" value="a"> a) plays</label>
+            <label><input type="radio" name="q3" value="b"> b) is playing</label>
+        </div>
+        <div class="radio-group" data-answer="a">
+            <label><input type="radio" name="q4" value="a"> a) watches</label>
+            <label><input type="radio" name="q4" value="b"> b) is watching</label>
+        </div>
+        <div class="radio-group" data-answer="b">
+            <label><input type="radio" name="q5" value="a"> a) do</label>
+            <label><input type="radio" name="q5" value="b"> b) are doing</label>
+        </div>
+        <button class="check-btn" onclick="checkTask1()">Проверить задание 1</button>
+    </div>
+
+    <!-- ЗАДАНИЕ 2 -->
+    <div class="task" id="task2">
+        <h2>Задание 2. Вставь am / is / are 🧩</h2>
+        <p class="instruction">Впиши правильную форму глагола to be.</p>
+
+        <div class="input-row">
+            <label>1. He ___ reading a book now.</label>
+            <input type="text" data-answer="is" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>2. They ___ playing football at the moment.</label>
+            <input type="text" data-answer="are" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>3. I ___ eating my lunch.</label>
+            <input type="text" data-answer="am" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>4. She ___ dancing now.</label>
+            <input type="text" data-answer="is" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>5. You ___ drawing a picture.</label>
+            <input type="text" data-answer="are" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <button class="check-btn" onclick="checkTask2()">Проверить задание 2</button>
+    </div>
+
+    <!-- ЗАДАНИЕ 3 (бывшее 5) -->
+    <div class="task" id="task5">
+        <h2>Задание 3. Составь предложения из слов 🧱</h2>
+        <p class="instruction">Напиши получившееся предложение.</p>
+
+        <div class="input-row">
+            <div class="word-bank">is / the / sleeping / cat / now</div>
+            <input type="text" data-answer="the cat is sleeping now" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <div class="word-bank">every / I / school / to / go / day</div>
+            <input type="text" data-answer="i go to school every day" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <div class="word-bank">are / they / playing / now / tennis</div>
+            <input type="text" data-answer="they are playing tennis now" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <div class="word-bank">usually / she / gets up / at 8</div>
+            <input type="text" data-answer="she usually gets up at 8" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <div class="word-bank">Look / is / he / running</div>
+            <input type="text" data-answer="look he is running" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <button class="check-btn" onclick="checkTask5()">Проверить задание 3</button>
+    </div>
+
+    <!-- ЗАДАНИЕ 4 (бывшее 6) -->
+    <div class="task" id="task6">
+        <h2>Задание 4. Переведи на английский 🇬🇧</h2>
+        <p class="instruction">Напиши перевод предложений.</p>
+
+        <div class="input-row">
+            <label>1. Я читаю книгу сейчас.</label>
+            <input type="text" data-answer="i am reading a book now" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>2. Он играет в футбол каждый день.</label>
+            <input type="text" data-answer="he plays football every day" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>3. Смотри! Собака бежит.</label>
+            <input type="text" data-answer="look the dog is running" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>4. Мы обычно ходим в парк.</label>
+            <input type="text" data-answer="we usually go to the park" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <div class="input-row">
+            <label>5. Она спит прямо сейчас.</label>
+            <input type="text" data-answer="she is sleeping right now" placeholder="...">
+            <span class="result-icon"></span>
+        </div>
+        <button class="check-btn" onclick="checkTask6()">Проверить задание 4</button>
+    </div>
+
+    <!-- ИТОГОВАЯ КНОПКА -->
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="check-btn" style="font-size: 1.3em; padding: 15px 40px; background: var(--secondary);" onclick="checkAll()">🏆 Проверить ВСЁ и узнать оценку</button>
+    </div>
+
+    <div id="final-result">
+        Твой результат: <span id="score">0</span> / 20
+        <p id="grade-text" style="margin-top: 10px; font-size: 1em;"></p>
+    </div>
+
+</div>
+
+<script>
+    // Нормализация ответа
+    function normalize(str) {
+        return str.trim().toLowerCase().replace(/[.!?]+$/, '').replace(/\s+/g, ' ');
+    }
+
+    // Проверка текстовых полей в блоке
+    function checkInputs(taskId) {
+        const task = document.getElementById(taskId);
+        const inputs = task.querySelectorAll('input[type="text"][data-answer]');
+        let correctCount = 0;
+
+        inputs.forEach(input => {
+            const userAnswer = normalize(input.value);
+            const correctAnswer = normalize(input.getAttribute('data-answer'));
+            const iconSpan = input.nextElementSibling;
+
+            input.classList.remove('correct', 'incorrect');
+            if (iconSpan) iconSpan.textContent = '';
+
+            if (userAnswer === correctAnswer) {
+                input.classList.add('correct');
+                if (iconSpan) iconSpan.textContent = '✅';
+                correctCount++;
+            } else {
+                input.classList.add('incorrect');
+                if (iconSpan) iconSpan.textContent = '❌';
+            }
+        });
+        return correctCount;
+    }
+
+    // Проверка Задания 1
+    function checkTask1() {
+        const task = document.getElementById('task1');
+        const groups = task.querySelectorAll('.radio-group');
+        let correctCount = 0;
+
+        groups.forEach(group => {
+            const correctAnswer = group.getAttribute('data-answer');
+            const selected = group.querySelector('input[type="radio"]:checked');
+            
+            group.style.border = 'none';
+            group.style.backgroundColor = '#f8f9fa';
+
+            if (selected && selected.value === correctAnswer) {
+                group.style.border = '2px solid var(--correct)';
+                group.style.backgroundColor = '#e8f8f5';
+                correctCount++;
+            } else {
+                group.style.border = '2px solid var(--incorrect)';
+                group.style.backgroundColor = '#fdedec';
+            }
+        });
+        alert(`Задание 1: ${correctCount} из 5 правильных ответов.`);
+        return correctCount;
+    }
+
+    // Обертки для кнопок
+    function checkTask2() { const c = checkInputs('task2'); alert(`Задание 2: ${c} из 5 правильных ответов.`); }
+    function checkTask5() { const c = checkInputs('task5'); alert(`Задание 3: ${c} из 5 правильных ответов.`); }
+    function checkTask6() { const c = checkInputs('task6'); alert(`Задание 4: ${c} из 5 правильных ответов.`); }
+
+    // Общая проверка
+    function checkAll() {
+        let totalCorrect = 0;
+
+        // Задание 1
+        const task1Groups = document.querySelectorAll('#task1 .radio-group');
+        task1Groups.forEach(group => {
+            const correctAnswer = group.getAttribute('data-answer');
+            const selected = group.querySelector('input[type="radio"]:checked');
+            group.style.border = 'none';
+            group.style.backgroundColor = '#f8f9fa';
+            if (selected && selected.value === correctAnswer) {
+                group.style.border = '2px solid var(--correct)';
+                group.style.backgroundColor = '#e8f8f5';
+                totalCorrect++;
+            } else {
+                group.style.border = '2px solid var(--incorrect)';
+                group.style.backgroundColor = '#fdedec';
+            }
+        });
+
+        // Задания 2, 3, 4
+        const tasksWithAnswers = ['task2', 'task5', 'task6'];
+        tasksWithAnswers.forEach(taskId => {
+            totalCorrect += checkInputs(taskId);
+        });
+
+        // Вывод результата
+        const totalQuestions = 20; // 5 + 5 + 5 + 5 = 20
+        const resultDiv = document.getElementById('final-result');
+        const scoreSpan = document.getElementById('score');
+        const gradeText = document.getElementById('grade-text');
+
+        scoreSpan.textContent = totalCorrect;
+        resultDiv.style.display = 'block';
+
+        const percentage = (totalCorrect / totalQuestions) * 100;
+        
+        if (percentage >= 90) {
+            gradeText.textContent = "🌟 Превосходно! Ты настоящий знаток английского!";
+        } else if (percentage >= 75) {
+            gradeText.textContent = "👍 Отличный результат! Совсем немного до идеала!";
+        } else if (percentage >= 50) {
+            gradeText.textContent = "🙂 Неплохо, но стоит повторить правила. У тебя всё получится!";
+        } else {
+            gradeText.textContent = "📚 Не расстраивайся! Прочитай правило ещё раз и попробуй снова.";
+        }
+
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
